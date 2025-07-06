@@ -6,7 +6,7 @@ public class TestClass
     public int PublicField;
     private string _privateField;
     public int Property { get; set; }
-
+    public void MethodWithParams(int a, string b) { }
     public void Method() { }
 }
 
