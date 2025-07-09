@@ -32,6 +32,8 @@ namespace task07
     {
         public static string PrintTypeInfo(Type type)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
             var output = new StringBuilder();
             var verAttr = type.GetCustomAttribute<VersionAttribute>();
             var nameAttr = type.GetCustomAttribute<DisplayNameAttribute>();
