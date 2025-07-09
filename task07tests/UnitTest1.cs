@@ -11,7 +11,7 @@ namespace task07tests
             var type = typeof(SampleClass);
             var attribute = type.GetCustomAttribute<DisplayNameAttribute>();
             Assert.NotNull(attribute);
-            Assert.Equal("Пример класса", attribute.DisplayName);
+            Assert.Equal("Class example", attribute.DisplayName);
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace task07tests
             var method = typeof(SampleClass).GetMethod("TestMethod");
             var attribute = method.GetCustomAttribute<DisplayNameAttribute>();
             Assert.NotNull(attribute);
-            Assert.Equal("Тестовый метод", attribute.DisplayName);
+            Assert.Equal("Test method", attribute.DisplayName);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace task07tests
             var prop = typeof(SampleClass).GetProperty("Number");
             var attribute = prop.GetCustomAttribute<DisplayNameAttribute>();
             Assert.NotNull(attribute);
-            Assert.Equal("Числовое свойство", attribute.DisplayName);
+            Assert.Equal("Numeric property", attribute.DisplayName);
         }
 
         [Fact]

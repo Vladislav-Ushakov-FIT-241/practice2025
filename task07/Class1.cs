@@ -18,13 +18,13 @@ namespace task07
     }
 
     [Version(1, 0)]
-    [DisplayName("Пример класса")]
+    [DisplayName("Class example")]
     public class SampleClass
     {
-        [DisplayName("Тестовый метод")]
+        [DisplayName("Test method")]
         public void TestMethod() { }
 
-        [DisplayName("Числовое свойство")]
+        [DisplayName("Numeric property")]
         public string? Number { get; set; }
     }
 
@@ -32,8 +32,6 @@ namespace task07
     {
         public static string PrintTypeInfo(Type type)
         {
-            Console.OutputEncoding = Encoding.UTF8;
-
             var output = new StringBuilder();
             var verAttr = type.GetCustomAttribute<VersionAttribute>();
             var nameAttr = type.GetCustomAttribute<DisplayNameAttribute>();
