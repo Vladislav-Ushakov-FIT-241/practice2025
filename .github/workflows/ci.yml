@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set UTF-8 locale
+      run: |
+        echo "LANG=UTF-8" >> $GITHUB_ENV
+        echo "LC_ALL=UTF-8" >> $GITHUB_ENV
+
     - name: Checkout
       uses: actions/checkout@v4
 
