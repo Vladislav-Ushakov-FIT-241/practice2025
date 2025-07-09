@@ -33,4 +33,7 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Tests
-      run: dotnet test --no-build --configuration Release --verbosity normal
+      run: | 
+        export LANG=en_US.UTF-8
+        export LC_ALL=en_US.UTF-8
+        dotnet test --no-build --configuration Release --verbosity normal
