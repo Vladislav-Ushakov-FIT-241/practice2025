@@ -33,7 +33,11 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Tests
-      run: | 
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y locales
+        sudo locale-gen en_US.UTF-8
+        sudo update-locale LANG=en_US.UTF-8
         export LANG=en_US.UTF-8
         export LC_ALL=en_US.UTF-8
         dotnet test --no-build --configuration Release --verbosity normal
