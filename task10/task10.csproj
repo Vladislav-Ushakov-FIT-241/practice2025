@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PluginBase\PluginBase.csproj" />
+	<Content Include="..\Plugins\*.dll">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Link>Plugins\%(Filename)%(Extension)</Link>
+	</Content>
+  </ItemGroup>
+
+</Project>
