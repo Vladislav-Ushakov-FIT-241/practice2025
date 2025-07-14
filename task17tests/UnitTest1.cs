@@ -34,25 +34,23 @@ public class ServerThreadTests
     }
 
     [Fact]
-    public async Task SoftStop_WaitsForCompletion()
+    public void SoftStop_WaitsForCompletion()
     {
         var server = new ServerThread();
         bool commandExecuted = false;
-        var completionSignal = new ManualResetEventSlim();
+        var signal = new ManualResetEventSlim();
 
         try
         {
             server.PostCommand(new ActionCommand(() =>
             {
                 commandExecuted = true;
-                completionSignal.Set();
+                signal.Set();
             }));
 
             server.PostCommand(new SoftStopCommand(server));
 
-            bool completed = completionSignal.Wait(1000);
-
-            Assert.True(completed, "SoftStop должен дождатьс€ выполнени€ команды");
+            Assert.True(signal.Wait(1000), " оманда не выполнилась в течение таймаута");
             Assert.True(commandExecuted);
         }
         finally

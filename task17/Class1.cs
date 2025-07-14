@@ -15,6 +15,7 @@ namespace task17
         private readonly BlockingCollection<ICommand> _commandQueue = new();
         private readonly int _workerThreadId;
         private bool _disposed = false;
+        private readonly CancellationTokenSource _cts = new();
 
         public ServerThread()
         {
@@ -30,26 +31,28 @@ namespace task17
         {
             try
             {
-                while (!_commandQueue.IsCompleted && !_disposed)
+                foreach (var command in _commandQueue.GetConsumingEnumerable(_cts.Token))
                 {
-                    if (_commandQueue.TryTake(out var command, Timeout.Infinite))
+                    try
                     {
-                        try
-                        {
-                            command.Execute();
-                        }
-                        catch (Exception ex)
-                        {
-                            ExceptionHandler.Handle(command, ex);
-                        }
+                        command.Execute();
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionHandler.Handle(command, ex);
                     }
                 }
+            }
+            catch (OperationCanceledException)
+            {
+                
             }
             finally
             {
                 _commandQueue.Dispose();
             }
         }
+
 
         public void PostCommand(ICommand command)
         {
@@ -86,9 +89,17 @@ namespace task17
             if (_disposed) return;
             _disposed = true;
 
-            _commandQueue.CompleteAdding();
-            _workerThread.Join(500);
-            _commandQueue.Dispose();
+            try
+            {
+                _cts.Cancel();
+                _commandQueue.CompleteAdding();
+                _workerThread.Join(500);
+            }
+            finally
+            {
+                _cts.Dispose();
+                _commandQueue.Dispose();
+            }
         }
     }
 
